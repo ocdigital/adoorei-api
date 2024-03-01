@@ -53,6 +53,21 @@ it('cant_list_sales', function () {
     $response->assertJsonCount(1); // Apenas uma venda
 });
 
+//consultar uma venda específica
+it('cant_show_sale', function () {
+    $products = Product::factory(2)->create();
+    $saleData = [
+        'products' => [
+            ['id' => $products[0]->id, 'amount' => 1],
+            ['id' => $products[1]->id, 'amount' => 1],
+        ],
+    ];
+    $response = $this->postJson('/api/sales', $saleData);
+    $sale = Sale::first();
+    $response = $this->getJson('/api/sales/' . $sale->id);
+    $response->assertStatus(200);
+});
+
 
 
 

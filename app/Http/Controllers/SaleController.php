@@ -24,7 +24,7 @@ class SaleController extends Controller
      */
     public function show(Sale $sale)
     {
-        return response()->json($sale);
+        return new SaleResource($sale);
     }
 
     /**
