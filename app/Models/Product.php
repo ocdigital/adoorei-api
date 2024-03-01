@@ -12,4 +12,14 @@ class Product extends Model
     use HasUuids; //utilizando UUID para evitar que a chave primária seja sequencial e previsível.
 
     protected $fillable = ['name', 'price', 'description'];
+
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    //relacionamento com vendas
+    public function sales()
+    {
+        return $this->belongsToMany(Sale::class)->withPivot('amount');
+    }
 }

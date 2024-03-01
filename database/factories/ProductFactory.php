@@ -20,6 +20,7 @@ class ProductFactory extends Factory
         $model = $this->faker->word . ' ' . $this->faker->randomElement(['X', 'Pro', 'Lite', 'Max', 'Ultra']);
 
         return [
+            'id' => \Illuminate\Support\Str::uuid(),
             'name' => $brand . ' ' . $model,
             'price' => $this->faker->randomFloat(2, 100, 1000),
             'description' => $this->faker->paragraph,
