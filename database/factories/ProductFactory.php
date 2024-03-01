@@ -16,10 +16,13 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $brand = $this->faker->randomElement(['Apple', 'Samsung', 'Google', 'OnePlus', 'Sony']);
+        $model = $this->faker->word . ' ' . $this->faker->randomElement(['X', 'Pro', 'Lite', 'Max', 'Ultra']);
+
         return [
-            'name' => $this->faker->name,
-            'price' => $this->faker->randomFloat(2, 1, 100),
-            'description' => $this->faker->text,
+            'name' => $brand . ' ' . $model,
+            'price' => $this->faker->randomFloat(2, 100, 1000),
+            'description' => $this->faker->paragraph,
         ];
     }
 }
