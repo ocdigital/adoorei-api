@@ -14,7 +14,7 @@ class Product extends Model
     protected $fillable = ['name', 'price', 'description'];
 
     protected $primaryKey = 'id';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'string';
 
     //relacionamento com vendas

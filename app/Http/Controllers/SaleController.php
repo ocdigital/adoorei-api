@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Sale;
+use App\Models\Product;
+use App\Http\Resources\SaleResource;
 
 class SaleController extends Controller
 {
@@ -13,8 +15,8 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::all();
-        return response()->json($sales);
+        $sales = Sale::with('products')->get();
+        return SaleResource::collection($sales);
     }
 
     /**
@@ -30,8 +32,16 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
+
         if (!$request->products) {
             return response()->json(['error' => 'Products is required'], 422);
+        }
+
+        //validar se existe os produtos antes
+        foreach ($request->products as $product) {
+            if (!Product::find($product['id'])) {
+                return response()->json(['error' => 'Product not found'], 422);
+            }
         }
 
         $sale = Sale::create();

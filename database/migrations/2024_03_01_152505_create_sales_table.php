@@ -21,7 +21,7 @@ return new class extends Migration
 
     //criando tabela pivot para relacionamento entre vendas e produtos
         Schema::create('product_sales', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->uuid('sale_id');
             $table->uuid('product_id');
             $table->integer('amount');

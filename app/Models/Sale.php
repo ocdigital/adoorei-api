@@ -15,7 +15,7 @@ class Sale extends Model
     protected $fillable = ['status'];
 
     protected $primaryKey = 'id';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'string';
 
     //relacionamento com produtos
