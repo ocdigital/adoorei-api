@@ -23,3 +23,6 @@ Route::get('/products', 'App\Http\Controllers\ProductController@index');
 
 Route::apiResource('sales', SaleController::class)->only(['index', 'show', 'store']);
 Route::put('/sales/{sale}/cancel', [SaleController::class, 'cancel'])->name('sales.cancel');
+Route::put('/sales/{sale}/add-product', [SaleController::class, 'addProductToSale'])->name('sales.add-product');
+
+

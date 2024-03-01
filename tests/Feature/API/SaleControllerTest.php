@@ -83,6 +83,33 @@ it('cant_cancel_sale', function () {
     $response->assertStatus(200);
 });
 
+// Cadastrar novos produtos a uma venda
+it('cant_add_products_to_sale', function () {
+    $products = Product::factory(2)->create();
+
+    // Criar uma nova venda
+    $saleData = [
+        'products' => [
+            ['id' => $products[0]->id, 'amount' => 1],
+        ],
+    ];
+    $response = $this->postJson('/api/sales', $saleData);
+    $response->assertStatus(201);
+
+    // Obter a instância da venda criada
+    $sale = Sale::first();
+
+    // Adicionar mais produtos à venda usando o endpoint específico
+    $additionalProducts = [
+        ['id' => $products[1]->id, 'amount' => 2],
+        // Adicione outros produtos conforme necessário
+    ];
+
+    $response = $this->putJson("/api/sales/{$sale->id}/add-product", ['products' => $additionalProducts]);
+
+    // Verificar se a resposta é 200 OK
+    $response->assertStatus(201);
+});
 
 
 
