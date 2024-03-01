@@ -68,6 +68,21 @@ it('cant_show_sale', function () {
     $response->assertStatus(200);
 });
 
+//cancelar uma venda
+it('cant_cancel_sale', function () {
+    $products = Product::factory(2)->create();
+    $saleData = [
+        'products' => [
+            ['id' => $products[0]->id, 'amount' => 1],
+            ['id' => $products[1]->id, 'amount' => 1],
+        ],
+    ];
+    $response = $this->postJson('/api/sales', $saleData);
+    $sale = Sale::first();
+    $response = $this->putJson('/api/sales/' . $sale->id . '/cancel');
+    $response->assertStatus(200);
+});
+
 
 
 
