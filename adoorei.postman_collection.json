@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "14447e20-f225-41ed-8d01-434d633d69e5",
+		"name": "adoorei",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "2748681"
+	},
+	"item": [
+		{
+			"name": "Produtcs",
+			"item": [
+				{
+					"name": "products/available",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{server}}api/products"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sales",
+			"item": [
+				{
+					"name": "sales/create",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    {\r\n      \"id\": \"033332\",\r\n      \"amount\": 1\r\n    },\r\n    {\r\n      \"id\": \"183\",\r\n      \"amount\": 1\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{server}}api/sales"
+					},
+					"response": []
+				},
+				{
+					"name": "sales/all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{server}}api/sales"
+					},
+					"response": []
+				},
+				{
+					"name": "sales/show",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "sales/cancel",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": "{{server}}api/sales/9b76415e-e1e2-498a-ae5d-250130c39a80/cancel"
+					},
+					"response": []
+				},
+				{
+					"name": "sales/add-products",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"products\": [\r\n    {\"id\": \"0fd1276d-cbd8-4ac2-b5b9-b53cf4c322ce\", \"amount\": 2},\r\n    {\"id\": \"23dec46f-987c-46bb-b6a4-cefe9cf8ca3f\", \"amount\": 1}\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{server}}api/sales/9b76415e-e1e2-498a-ae5d-250130c39a80/add-product"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": "http://localhost:8000/",
+			"type": "string"
+		}
+	]
+}
