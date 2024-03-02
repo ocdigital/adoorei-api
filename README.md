@@ -7,7 +7,7 @@ API rest
 - [PHP](https://www.php.net/) (versão 8.1.27 )
 - [Composer](https://getcomposer.org/) (versão 2.7.1)
 - [Laravel](https://laravel.com/) (versão 10.10)
-- ...
+
 
 ## Instalação
 
