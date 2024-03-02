@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSaleRequest;
 use Illuminate\Http\Request;
 use App\Models\Sale;
 use App\Models\Product;
 use App\Http\Resources\SaleResource;
+use App\Services\SaleCancellationService;
 
 class SaleController extends Controller
 {
 
+    public function __construct(private SaleCancellationService $saleCancellationService)
+    {}
     /**
      * Listar vendas
      */
@@ -30,44 +34,34 @@ class SaleController extends Controller
     /**
      * Nova venda
      */
-    public function store(Request $request)
+    public function store(StoreSaleRequest $request)
     {
+        try{
+            $sale = Sale::create();
 
-        if (!$request->products) {
-            return response()->json(['error' => 'Products is required'], 422);
-        }
-
-        //validar se existe os produtos antes
-        foreach ($request->products as $product) {
-            if (!Product::find($product['id'])) {
-                return response()->json(['error' => 'Product not found'], 422);
+            foreach ($request->products as $product) {
+                $sale->products()->attach($product['id'], ['amount' => $product['amount']]);
             }
+
+            return response()->json($sale, 201);
         }
-
-        $sale = Sale::create();
-
-        foreach ($request->products as $product) {
-            $sale->products()->attach($product['id'], ['amount' => $product['amount']]);
+        catch (\Exception $e) {
+            return response()->json(['error' => 'Internal Server Error', $e], 500);
         }
-
-        return response()->json($sale, 201);
     }
 
 
     public function cancel(Sale $sale)
     {
-        //garanta que a venda exista e cancela
-        if (!$sale) {
-            return response()->json(['error' => 'Sale not found'], 404);
-        }
-
         try {
-            $sale->status = 'canceled';
-            $sale->save();
+            $this->saleCancellationService->cancelSale($sale);
             return response()->json($sale);
-        }
-        catch (\Exception $e) {
-            return response()->json(['error' => 'Error to cancel sale',$e], 500);
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['error' => $e->getMessage()], 402);
+        } catch (\RuntimeException $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Throwable $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
 
     }
