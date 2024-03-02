@@ -1,55 +1,84 @@
-# Desafio desenvolvedor back-end (Adoorei)
+# Desafio Desenvolvedor Back-end (Adoorei) - API Rest
 
-API rest 
+![Adoorei Logo](https://camo.githubusercontent.com/cf25d81ab5acf028eda0aa2d361aca96198ef9d789a12a7e9b9931c8c799e297/68747470733a2f2f61646f6f7265692e73332e75732d656173742d322e616d617a6f6e6177732e636f6d2f696d616765732f6c6f6a655f74657374655f6c6f676f61646f6f7265695f313636323437363636332e706e67)
+
+Este projeto é uma API REST desenvolvida para o desafio de desenvolvedor back-end da Adoorei.
 
 ## Requisitos
 
-- [PHP](https://www.php.net/) (versão 8.1.27 )
+- [PHP](https://www.php.net/) (versão 8.1.27)
 - [Composer](https://getcomposer.org/) (versão 2.7.1)
 - [Laravel](https://laravel.com/) (versão 10.10)
 
-
 ## Instalação
 
-```bash
-# Clone o repositório
-git clone https://github.com/ocdigital/adoorei-api.git
+1. **Clone o Repositório:**
+    ```bash
+    git clone https://github.com/ocdigital/adoorei-api.git
+    ```
 
-# Acesse o diretório do projeto
-cd seu-projeto
+2. **Acesse o Diretório do Projeto:**
+    ```bash
+    cd seu-projeto
+    ```
 
-#Compilar a imagem do aplicação
-docker-compose build
+3. **Compilar a Imagem da Aplicação:**
+    ```bash
+    docker-compose build
+    ```
 
-#Execute o ambiente em modo de segundo plano
-docker-compose up -d
+4. **Execute o Ambiente em Modo de Segundo Plano:**
+    ```bash
+    docker-compose up -d
+    ```
 
-# Instale as dependências do Composer
-composer install
+5. **Instale as Dependências do Composer:**
+    ```bash
+    composer install
+    ```
 
-# Copie o arquivo de configuração do ambiente
-cp .env.example .env
+6. **Copie o Arquivo de Configuração do Ambiente:**
+    ```bash
+    cp .env.example .env
+    ```
 
-# Configure as variáveis de ambiente no arquivo .env
+7. **Configure as Variáveis de Ambiente no Arquivo `.env`:**
+    *(Edite o arquivo `.env` com suas configurações)*
 
-# Gere a chave de aplicação
-php artisan key:generate
+8. **Gere a Chave de Aplicação:**
+    ```bash
+    php artisan key:generate
+    ```
 
-# Execute as migrações do banco de dados
-php artisan migrate
+9. **Entre no Container para Executar as Migrações:**
+    *(Encontre o nome do container)*
+    ```bash
+    docker ps
+    docker exec -it nome-do-container bash
+    ```
 
-#Execute a seeder para gerar os produtos
-php artisan db:seed --class=ProductSeeder
+10. **Execute as Migrações do Banco de Dados:**
+    ```bash
+    php artisan migrate
+    ```
 
-php artisan db:seed --class=SaleSeeder
+11. **Execute o Seeder para Gerar os Produtos:**
+    ```bash
+    php artisan db:seed --class=ProductSeeder
+    ```
 
-# Execute os testes
-php artisan test
+12. **Opcional: Gerar Vendas para Testes:**
+    ```bash
+    php artisan db:seed --class=SaleSeeder
+    ```
 
-##Documentação da API (Postman)
-https://documenter.getpostman.com/view/2748681/2sA2xb5vSz
+13. **Execute os Testes:**
+    ```bash
+    php artisan test
+    ```
 
-#arquivo na raiz do projeto
-adoorei.postman_collection.json
+## Documentação da API (Postman)
 
+Explore a documentação da API no Postman [aqui](https://documenter.getpostman.com/view/2748681/2sA2xb5vSz).
 
+Arquivo do Postman disponível na raiz do projeto: `adoorei.postman_collection.json`.
