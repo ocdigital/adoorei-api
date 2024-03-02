@@ -67,7 +67,7 @@ Este projeto é uma API REST desenvolvida para o desafio de desenvolvedor back-e
     php artisan db:seed --class=ProductSeeder
     ```
 
-12. **Opcional: Gerar Vendas para Testes:**
+12. **Opcional: Gerar Vendas**
     ```bash
     php artisan db:seed --class=SaleSeeder
     ```
