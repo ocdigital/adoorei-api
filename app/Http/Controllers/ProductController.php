@@ -7,13 +7,12 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-
-  //Listar produtos disponíveis
-
+    /**
+     * Listar produtos
+     */
     public function index(Product $product)
     {
         return response()->json($product->all());
     }
-
 
 }

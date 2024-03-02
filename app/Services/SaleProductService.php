@@ -11,7 +11,6 @@ class SaleProductService
     //vericiar no banco se a venda existe
     public function validateSale($sale): void
     {
-        $sale = Sale::find($sale);
         if (!$sale) {
             throw new \Exception('Sale not found');
         }
