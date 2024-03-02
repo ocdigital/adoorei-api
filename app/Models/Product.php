@@ -11,7 +11,7 @@ class Product extends Model
 
     use HasUuids; //utilizando UUID para evitar que a chave primária seja sequencial e previsível.
 
-    protected $fillable = ['name', 'price', 'description'];
+    protected $fillable = ['name', 'price', 'description','amount'];
 
     protected $primaryKey = 'id';
     public $incrementing = true;

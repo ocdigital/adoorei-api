@@ -18,11 +18,8 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
-            'price' => $this->price,
             'description' => $this->description,
-            'amount' => $this->whenPivotLoaded('product_sale', function () {
-                return $this->pivot->amount;
-            }),
+            'amount' => $this->pivot->amount,
         ];
     }
 }
