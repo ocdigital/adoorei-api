@@ -8,11 +8,16 @@ use App\Models\Sale;
 use App\Models\Product;
 use App\Http\Resources\SaleResource;
 use App\Services\SaleCancellationService;
+use App\Services\SaleProductService;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
 
-    public function __construct(private SaleCancellationService $saleCancellationService)
+    public function __construct(
+        private SaleCancellationService $saleCancellationService,
+        private SaleProductService $saleProductService
+    )
     {}
     /**
      * Listar vendas
@@ -37,16 +42,19 @@ class SaleController extends Controller
     public function store(StoreSaleRequest $request)
     {
         try{
+            DB::beginTransaction();
             $sale = Sale::create();
 
             foreach ($request->products as $product) {
                 $sale->products()->attach($product['id'], ['amount' => $product['amount']]);
             }
 
+            DB::commit();
             return response()->json($sale, 201);
         }
         catch (\Exception $e) {
-            return response()->json(['error' => 'Internal Server Error', $e], 500);
+            DB::rollBack();
+            return response()->json(['error' => 'Error when trying to create'], 500);
         }
     }
 
@@ -72,30 +80,25 @@ class SaleController extends Controller
     public function addProductToSale(Request $request, Sale $sale)
     {
         try {
-            // Verifica se a solicitação contém a chave 'products'
-            if (!$request->has('products') || empty($request->products)) {
-                return response()->json(['error' => 'Products is required'], 422);
-            }
+            $this->validateProducts($request->products);
 
-            // Obtém os IDs dos produtos a serem adicionados
-            $productIds = collect($request->products)->pluck('id')->toArray();
+            $this->attachProductsToSale($sale, $request->products);
 
-            // Valida se os produtos existem antes de adicioná-los
-            $existingProducts = Product::whereIn('id', $productIds)->get();
-            $missingProductIds = array_diff($productIds, $existingProducts->pluck('id')->toArray());
-
-            if (!empty($missingProductIds)) {
-                return response()->json(['error' => 'Product(s) not found'], 422);
-            }
-
-            // Adiciona os produtos à venda
-            foreach ($request->products as $product) {
-                $sale->products()->attach($product['id'], ['amount' => $product['amount']]);
-            }
-
-            return response()->json($sale,201);
+            return response()->json($sale, 201);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Internal Server Error', $e], 500);
+            return response()->json(['error' => 'Product(s) not found'], 422);
+        }
+    }
+
+    private function validateProducts($products)
+    {
+        $this->saleProductService->validateProducts($products);
+    }
+
+    private function attachProductsToSale(Sale $sale, $products)
+    {
+        foreach ($products as $product) {
+            $sale->products()->attach($product['id'], ['amount' => $product['amount']]);
         }
     }
 
