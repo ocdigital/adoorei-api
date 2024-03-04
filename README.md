@@ -79,4 +79,4 @@ Este projeto é uma API REST desenvolvida para o desafio de desenvolvedor back-e
 
 Explore a documentação da API no Postman [aqui](https://documenter.getpostman.com/view/2748681/2sA2xb5vSz).
 
-Arquivo do Postman disponível na raiz do projeto: `adoorei.postman_collection.json`.
+Arquivo do Postman disponível na raiz do projeto.
